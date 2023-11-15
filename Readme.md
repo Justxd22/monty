@@ -1,6 +1,9 @@
 # MONTY
 
-alx Team project
+alx Team project   
+  
+### folder ./t/ contains test cases use with ./monty t/00.m  
+  
 
 ## 0. push, pall
 ```bash
