@@ -5,7 +5,7 @@ int main(int argc, char **argv)
 {
     FILE *f;
     char *line = NULL;
-    size_t input_size = 0,
+    size_t input_size = 0;
 
     if (argc != 2)
         err(0, "");
