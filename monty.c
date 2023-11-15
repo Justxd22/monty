@@ -5,6 +5,7 @@ int main(int argc, char **argv)
 {
     FILE *f;
     char *line = NULL;
+    size_t input_size = 0,
 
     if (argc != 2)
         err(0, "");
@@ -13,7 +14,7 @@ int main(int argc, char **argv)
     if (f == NULL)
         err(1, argv[1]);
 
-    while (getline(&line, sizeof(line), f) != -1)
+    while (getline(&line, &input_size, f) != -1)
     {
         printf("%s", line);
     }
