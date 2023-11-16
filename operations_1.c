@@ -1,6 +1,10 @@
 #include "monty.h"
 
-
+/**
+ * push - Pushes an element onto the stack
+ * @stack: Double pointer to the head of the stack
+ * @line_number: The current line number in the Monty bytecode file
+*/
 void push(stack_t **stack, unsigned int line_number)
 {
 	stack_t *n, *t;
@@ -10,8 +14,8 @@ void push(stack_t **stack, unsigned int line_number)
 	Pnumber = atoi(arg);
 	n = malloc(sizeof(stack_t));
 	if (n == NULL)
-				err(2, "");
-		
+		err(2, "");
+
 	n->n = Pnumber;
 	n->prev = NULL;
 	n->next = NULL;
@@ -28,6 +32,11 @@ void push(stack_t **stack, unsigned int line_number)
 	}
 }
 
+/**
+ * pall - Prints all the elements of the stack
+ * @stack: Double pointer to the head of the stack
+ * @line_number: The current line number in the Monty bytecode file
+*/
 void pall(stack_t **stack, unsigned int line_number)
 {
 	stack_t *t;
@@ -40,6 +49,11 @@ void pall(stack_t **stack, unsigned int line_number)
 	}
 }
 
+/**
+ * pint - Prints the value at the top of the stack
+ * @stack: Double pointer to the head of the stack
+ * @line_number: Current line number in the Monty bytecode file
+*/
 void pint(stack_t **stack, unsigned int line_number)
 {
 	if (*stack == NULL)
