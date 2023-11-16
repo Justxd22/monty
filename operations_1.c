@@ -3,7 +3,7 @@
 /**
  * push - Pushes an element onto the stack
  * @stack: Double pointer to the head of the stack
- * @line_number: The current line number in the Monty bytecode file
+ * @line_number: Current line number in the Monty bytecode file
 */
 void push(stack_t **stack, unsigned int line_number)
 {
@@ -35,7 +35,7 @@ void push(stack_t **stack, unsigned int line_number)
 /**
  * pall - Prints all the elements of the stack
  * @stack: Double pointer to the head of the stack
- * @line_number: The current line number in the Monty bytecode file
+ * @line_number: Current line number in the Monty bytecode file
 */
 void pall(stack_t **stack, unsigned int line_number)
 {

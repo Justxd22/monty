@@ -2,8 +2,8 @@
 
 /**
  * exc_func - Creates an instruction_t structure
- * @l: The input line of code
- * Return: A pointer to the created instruction_t structure
+ * @l: Input line of code
+ * Return: Pointer to the created instruction_t structure
 */
 instruction_t *exc_func(char *l)
 {
