@@ -1,23 +1,91 @@
 #include "monty.h"
 
+instruction_t *exc_func(char *l)
+{
+		char *code;
+		instruction_t *queue;
+
+		code = strtok(l, "\n\t ");
+		queue = malloc(sizeof(*queue));
+		if (queue == NULL)
+				err(2, "");
+		queue->opcode = code;
+		queue->f = NULL;
+		if (strcmp(code, "push") == 0)
+				queue->f = push;
+		else if (strcmp(code, "pall") == 0)
+				queue->f = pall;
+		else if (strcmp(code, "pint") == 0)
+				queue->f = pint;
+		else if (strcmp(code, "pop") == 0)
+				queue->f = pop;
+		else if (strcmp(code, "swap") == 0)
+				queue->f = swap;
+		else if (strcmp(code, "add") == 0)
+				queue->f = add;
+		else if (strcmp(code, "nop") == 0)
+				queue->f = nop;
+		else
+				queue->f = unknown;
+		
+		return (queue);
+}
+
+void freeLIST(stack_t *h)
+{
+	stack_t *n;
+
+	if (!h)
+		return;
+
+	n = h;
+	while (n)
+	{
+		h = n, n = h->n;
+		free(h);
+	}
+}
 
 int main(int argc, char **argv)
 {
-    FILE *f;
-    char *line = NULL;
-    size_t input_size = 0;
+		FILE *f;
+		char *line = NULL;
+		unsigned int n = 0, r = 0;
+		size_t input_size = 0;
+		instruction_t *exec = NULL;
+		stack_t *list = NULL;
 
-    if (argc != 2)
-        err(0, "");
+		if (argc != 2)
+				err(0, "");
 
-    f = fopen(argv[1], "r");
-    if (f == NULL)
-        err(1, argv[1]);
+		f = fopen(argv[1], "r");
+		if (f == NULL)
+				err(1, argv[1]);
 
-    while (getline(&line, &input_size, f) != -1)
-    {
-        printf("%s", line);
-    }
+		while (getline(&line, &input_size, f) != -1)
+		{
+				if (!line)
+						continue;
+				n++;
+				printf("%s", line);
+				exec = exc_func(line);
+				
+				if (!exec->opcode[0] == '#')
+				{
+						r = exec->f(&list, n);
+						if (r != 0)
+						{
+								free(line), free(exec), fclose(f);
+								exit(EXIT_FAILURE);
+						}
+				}
+				free(exec);
+				free(line);
+				line = NULL;
+				continue;
+		}
 
-    fclose(f);
+		freeLIST(list);
+		fclose(f);
+		return (0);
 }
