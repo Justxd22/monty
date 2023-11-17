@@ -11,6 +11,7 @@ void push(stack_t **stack, unsigned int line_number)
 	char *arg = strtok(NULL, "\n \t");
 	int Pnumber;
 
+	UNUSED(line_number);
 	Pnumber = atoi(arg);
 	n = malloc(sizeof(stack_t));
 	if (n == NULL)
@@ -41,6 +42,7 @@ void pall(stack_t **stack, unsigned int line_number)
 {
 	stack_t *t;
 
+	UNUSED(line_number);
 	t = *stack;
 	while (t)
 	{
