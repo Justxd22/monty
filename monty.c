@@ -22,16 +22,7 @@ instruction_t *exc_func(char *l)
 		queue->f = pall;
 	else if (strcmp(code, "pint") == 0)
 		queue->f = pint;
-	else if (strcmp(code, "pop") == 0)
-		queue->f = pop;
-	else if (strcmp(code, "swap") == 0)
-		queue->f = swap;
-	else if (strcmp(code, "add") == 0)
-		queue->f = add;
-	else if (strcmp(code, "nop") == 0)
-		queue->f = nop;
-	else
-		queue->f = unknown;
+
 
 	return (queue);
 }
@@ -50,7 +41,8 @@ void freeLIST(stack_t *h)
 	n = h;
 	while (n)
 	{
-		h = n, n = h->n;
+		h = n;
+		n = h->next;
 		free(h);
 	}
 }
@@ -82,26 +74,25 @@ int main(int argc, char **argv)
 	{
 		if (!line)
 			continue;
-		n++;
-		printf("%s", line);
-		exec = exc_func(line);
+		n++, exec = exc_func(line);
 
-		if (!exec->opcode[0] == '#')
+		if (!exec->f)
+			fprintf(stderr, "L%d: unknown instruction %s\n", n, exec->opcode), r = -1;
+		else if (exec->opcode[0] == '#')
+			r = 0;
+		else
+			exec->f(&list, n);
+
+		free(exec), free(line), line = NULL;
+		if (r != 0)
 		{
-			r = exec->f(&list, n);
-			if (r != 0)
-			{
-				free(line), free(exec), fclose(f);
-				exit(EXIT_FAILURE);
-			}
+			if (list)
+				freeLIST(list);
+			exit(EXIT_FAILURE);
 		}
-		free(exec);
-		free(line);
-		line = NULL;
 		continue;
 	}
 
-	freeLIST(list);
-	fclose(f);
+	freeLIST(list), fclose(f);
 	return (0);
 }
