@@ -7,7 +7,7 @@
 */
 void push(stack_t **stack, unsigned int line_number)
 {
-	stack_t *n, *t;
+	stack_t *n;
 	char *arg = strtok(NULL, "\n \t");
 	int Pnumber;
 
@@ -25,11 +25,9 @@ void push(stack_t **stack, unsigned int line_number)
 		*stack = n;
 	else
 	{
-		t = *stack;
-		while (t->next != NULL)
-			t = t->next;
-		t->next = n;
-		n->prev = t;
+		(*stack)->prev = n;
+		n->next = *stack;
+		*stack = n;
 	}
 }
 
@@ -64,4 +62,33 @@ void pint(stack_t **stack, unsigned int line_number)
 		exit(EXIT_FAILURE);
 	}
 	printf("%d\n", (*stack)->n);
+}
+
+/**
+ * pop - pop elenents
+ * @stack: Double pointer to the head of the stack
+ * @line_number: Current line number in the Monty bytecode file
+*/
+void pop(stack_t **stack, unsigned int line_number)
+{
+	stack_t *t;
+	if (*stack == NULL)
+	{
+		fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+	t = *stack;
+	*stack = (*stack)->next;
+	free(t);
+}
+
+/**
+ * nop - nothing
+ * @stack: Double pointer to the head of the stack
+ * @line_number: Current line number in the Monty bytecode file
+*/
+void nop(stack_t **stack, unsigned int line_number)
+{
+	UNUSED(line_number);
+	UNUSED(stack);
 }

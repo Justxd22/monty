@@ -22,7 +22,14 @@ instruction_t *exc_func(char *l)
 		queue->f = pall;
 	else if (strcmp(code, "pint") == 0)
 		queue->f = pint;
-
+	else if (strcmp(code, "pop") == 0)
+		queue->f = pop;
+	else if (strcmp(code, "swap") == 0)
+		queue->f = swap;
+	else if (strcmp(code, "add") == 0)
+		queue->f = add;
+	else if (strcmp(code, "nop") == 0)
+		queue->f = nop;
 
 	return (queue);
 }
